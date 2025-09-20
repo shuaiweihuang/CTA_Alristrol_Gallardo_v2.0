@@ -32,7 +32,7 @@ SRCS = ARSTMain.cpp \
        ARSTDumpErrLog.cpp \
        ARSTHeartbeat.cpp \
        ARSTQueueNode.cpp \
-       ARSTQueueNodes.cpp \
+       ARSTQueueManager.cpp \
        ARSTRequest.cpp \
        ARSTServer.cpp \
        ARSTServiceHandler.cpp \

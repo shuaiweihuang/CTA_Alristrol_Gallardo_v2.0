@@ -7,7 +7,7 @@
 #include "ARSTWebConns.h"
 #include "ARSTWebConn.h"
 #include "ARSTGlobal.h"
-#include "ARSTQueueNodes.h"
+#include "ARSTQueueManager.h"
 
 
 using namespace std;
@@ -193,7 +193,7 @@ void ARSTServers::OnHeartbeatRequest()
 		hostname, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
 
 //	FprintfStderrLog("HEARTBEAT REQUEST", -1, 0, NULL, 0,  NULL, 0);
-	ARSTQueueDAO* pQueueDAO = ARSTQueueDAOs::GetInstance()->m_QueueDAOMonitor;
+	ARSTQueueDAO* pQueueDAO = ARSTQueueDAOManager::GetInstance()->m_QueueDAOMonitor;
 	pQueueDAO->SendData(caHeartbeatRequestBuf, strlen(caHeartbeatRequestBuf));
 
 	gethostname(hostname, sizeof hostname);

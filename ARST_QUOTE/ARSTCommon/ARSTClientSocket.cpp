@@ -11,7 +11,7 @@
 #include "ARSTClientSocketCallback.h"
 #include "ARSTClientSocket.h"
 
-#include "../ARSTQueueNodes.h"
+#include "../ARSTQueueManager.h"
 #include "../ARSTServer.h"
 #include "../ARSTGlobal.h"
 

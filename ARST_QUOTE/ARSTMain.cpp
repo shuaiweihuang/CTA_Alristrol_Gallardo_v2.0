@@ -8,7 +8,7 @@
 
 #include "ARSTServer.h"
 #include "ARSTWebConns.h"
-#include "ARSTQueueNodes.h"
+#include "ARSTQueueManager.h"
 
 using namespace std;
 
@@ -69,11 +69,11 @@ int main()
 	//Queue init.
 	ReadQueueDAOConfigFile("../ini/ARSTQuote.ini", strService, nNumberOfQueueDAO, kQueueDAOWriteStartKey, kQueueDAOWriteEndKey, kQueueDAOReadStartKey, kQueueDAOReadEndKey, kQueueDAOMonitorKey);
 	//printf("%d, %d, %d, %d\n", kQueueDAOWriteStartKey, kQueueDAOWriteEndKey, kQueueDAOReadStartKey, kQueueDAOReadEndKey);
-	ARSTQueueDAOs* pQueueDAOs = ARSTQueueDAOs::GetInstance();
-	assert(pQueueDAOs);
+	ARSTQueueDAOManager* pQueueDAOManager = ARSTQueueDAOManager::GetInstance();
+	assert(pQueueDAOManager);
 
-	pQueueDAOs->SetConfiguration(strService, nNumberOfQueueDAO, kQueueDAOWriteStartKey, kQueueDAOWriteEndKey, kQueueDAOReadStartKey, kQueueDAOReadEndKey, kQueueDAOMonitorKey);
-	pQueueDAOs->StartUpDAOs();
+	pQueueDAOManager->SetConfiguration(strService, nNumberOfQueueDAO, kQueueDAOWriteStartKey, kQueueDAOWriteEndKey, kQueueDAOReadStartKey, kQueueDAOReadEndKey, kQueueDAOMonitorKey);
+	pQueueDAOManager->StartUpDAOs();
 
 	//Server connection service.
 	ARSTClients* pClients = NULL;

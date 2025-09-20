@@ -9,25 +9,50 @@
 using namespace neosmart;
 using namespace std;
 
+/*
+ * @class ARSTHeartbeat
+ * @brief 心跳檢測模組，繼承自 ARSTThread
+ *
+ * 負責定期檢查連線或服務是否存活，並透過回呼通知上層事件：
+ * - 心跳請求 (OnHeartbeatRequest)
+ * - 心跳失敗 (OnHeartbeatLost)
+ * - 錯誤事件 (OnHeartbeatError)
+ */
 
-class ARSTHeartbeat: public ARSTThread
+class ARSTHeartbeat : public ARSTThread
 {
-	private:
-		int m_nTimeInterval;
+private:
+    int m_nTimeInterval;                         ///< 心跳檢查間隔（秒）
+    int m_nIdleTime;                             ///< 累積閒置時間（秒）
+    ARSTHeartbeatCallback* m_pHeartbeatCallback; ///< 回呼介面
+    neosmart_event_t m_PEvent[2];                ///< 事件陣列: 0=收到回覆, 1=終止心跳
 
-		ARSTHeartbeatCallback* m_pHeartbeatCallback;
-		neosmart_event_t m_PEvent[2];
+protected:
+    /**
+     * @brief 執行緒主函式，處理心跳邏輯
+     */
+    void* Run() override;
 
-	protected:
-		void* Run();
+public:
+    explicit ARSTHeartbeat(ARSTHeartbeatCallback* pHeartbeatCallback);
+    virtual ~ARSTHeartbeat();
 
-	public:
-		int m_nIdleTime;
-		ARSTHeartbeat(ARSTHeartbeatCallback* pHeartbeatCallback);
-		virtual ~ARSTHeartbeat();
-		void SetTimeInterval(int);
-		void TriggerGetReplyEvent();
-		void TriggerTerminateEvent();
+    /**
+     * @brief 設定心跳間隔
+     * @param nTimeInterval 心跳間隔秒數
+     */
+    void SetTimeInterval(int nTimeInterval);
 
+    /**
+     * @brief 觸發收到回覆事件
+     */
+    void TriggerGetReplyEvent();
+
+    /**
+     * @brief 觸發終止心跳事件
+     */
+    void TriggerTerminateEvent();
 };
-#endif
+
+#endif // ARSTHEARTBEAT_H_
+

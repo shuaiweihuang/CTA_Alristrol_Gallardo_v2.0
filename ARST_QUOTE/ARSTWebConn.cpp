@@ -12,7 +12,7 @@
 #include "ARSTWebConn.h"
 #include "ARSTGlobal.h"
 #include "Include/ARSTTSFormat.h"
-#include "ARSTQueueNodes.h"
+#include "ARSTQueueManager.h"
 
 using namespace std;
 
@@ -136,7 +136,7 @@ void* ARSTServer::Run()
 				while(1) {sleep(1);}//wait for ARSTServers restart
 			}
 			//printf("[%s] %s\n", m_strName.c_str(), uncaRecvBuf);
-			ARSTQueueDAO* pQueueDAO = ARSTQueueDAOs::GetInstance()->GetDAO();
+			ARSTQueueDAO* pQueueDAO = ARSTQueueDAOManager::GetInstance()->GetDAO();
 			assert(pQueueDAO);
 			pQueueDAO->SendData(uncaRecvBuf, strlen(uncaRecvBuf));
 		}
